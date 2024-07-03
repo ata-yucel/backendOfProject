@@ -4,31 +4,31 @@ const UserRouter = express.Router()
 const jwt = require("jsonwebtoken")
 const tokenControl = require("../middleware/token")
 
+
+UserRouter.post("/login", async(req, res) => {
+    try {
+        const {username, password} = req.body
+        if(!username || !password || username === "" || password === ""){
+            return res.status(404).send({status: false, message: 'Username and Password Required!'})
+        }
+        let enteredUser = await User.findOne({username})
+        if(!enteredUser){
+            return res.status(404).send({status: false, message: 'Username can not be found!'})
+        }
+        if(enteredUser.password !== password){
+            return res.status(404).send({status: false, message: 'Password is not matching!'})
+        }
+        let token_given=jwt.sign({username:enteredUser.username},process.env.JWTKEY,{expiresIn: "1h"})
+        res.status(200).send({status:true,message:`Login Successful, Welcome user ${username} ! `,token:token_given})
+        
+    } catch (error) {
+        res.status(404).send({status: false, message: error.message})
+    }
+})
 UserRouter.post("/register", async(req,res) => {
   try {
     let savedUser = await User.create(req.body)
     res.status(200).send({status: true, message: `User ${savedUser.username} Created!`})
-  } catch (error) {
-    res.status(404).send({status: false, message: error.message})
-  }
-})
-
-UserRouter.post("/login", async(req, res) => {
-  try {
-    const {username, password} = req.body
-    if(!username || !password || username === "" || password === ""){
-      return res.status(404).send({status: false, message: 'Username and Password Required!'})
-    }
-    let enteredUser = await User.findOne({username})
-    if(!enteredUser){
-      return res.status(404).send({status: false, message: 'Username can not be found!'})
-    }
-    if(enteredUser.password !== password){
-      return res.status(404).send({status: false, message: 'Password is not matching!'})
-    }
-let token_given=jwt.sign({username:enteredUser.username},process.env.JWTKEY,{expiresIn: "1h"})
-res.status(200).send({status:true,message:`Login Successful, Welcome user ${username} ! `,token:token_given})
-
   } catch (error) {
     res.status(404).send({status: false, message: error.message})
   }
