@@ -29,8 +29,6 @@ ManProductRouter.get("/allManProducts", async(req,res) => {
     res.status(404).send({status: false, message: error.message})
   }
 })
-
-
 ManProductRouter.delete("/deleteManProduct", async (req, res) => {
   try {
     let { id } = req.body;

@@ -7,6 +7,7 @@ const WomanDressRouter = require("./router/WomanDressRouter")
 const ManDressRouter = require("./router/ManDressRouter")
 const UserRouter = require("./router/UserRouter.js")
 const authMiddleware = require("./middleware/token")
+const OrderRouter = require("./router/OrderRouter.js")
 
 
 mongoose.connect("mongodb+srv://atayucel:nilgunata184@atacluster.wqqdyed.mongodb.net/project?retryWrites=true&w=majority")
@@ -25,6 +26,7 @@ app.use(cors({
 app.use("/user", UserRouter)
 app.use("/man", ManDressRouter)
 app.use("/woman",WomanDressRouter)
+app.use("/order", OrderRouter)
 
 app.use(authMiddleware)
 
