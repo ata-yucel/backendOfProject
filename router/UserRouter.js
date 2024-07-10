@@ -24,8 +24,10 @@ UserRouter.post("/login", async (req, res) => {
             token: token_given,
             user: {
                 username: user.username,
-                email: user.email
-            }
+                email: user.email,
+                balance: user.balance 
+            },
+          
         });
     } catch (error) {
         res.status(404).send({ status: false, message: error.message });

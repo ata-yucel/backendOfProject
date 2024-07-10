@@ -16,23 +16,22 @@ OrderRouter.post("/create", async (req, res) => {
       return res.status(400).send({ status: false, message: 'User not found!' });
     }
 
-    const orderProducts = products.map(product => ({
-      productId: product._id,
-      nameOfProduct: product.nameOfProduct,
-      image: product.image,
-      quantity: product.cartQuantity,
-      price: product.price
-    }));
+    if (user.balance < totalPrice) {
+      return res.status(400).send({ status: false, message: 'Insufficient balance!' });
+    }
+
+    user.balance -= totalPrice;
+    await user.save();
 
     const newOrder = new Order({
       username,
-      products: orderProducts,
+      products,
       totalPrice,
       address
     });
 
     await newOrder.save();
-    res.status(200).send({ status: true, message: 'Order created successfully!' });
+    res.status(200).send({ status: true, message: 'Order created successfully!', newBalance: user.balance });
   } catch (error) {
     res.status(400).send({ status: false, message: error.message });
   }
