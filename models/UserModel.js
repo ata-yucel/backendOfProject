@@ -14,7 +14,7 @@ const UserSchema = new Schema({
         minlength: [5, 'Password must be 5 characters!'],
         validate: {
             validator: function(value) {
-                // Şifrede en az bir sayı olup olmadığını kontrol eder
+            
                 return validator.matches(value, /\d/);
             },
             message: 'Password must contain at least 1 number!'

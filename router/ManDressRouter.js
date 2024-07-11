@@ -50,7 +50,7 @@ ManDressRouter.delete("/deleteManProduct", async (req, res) => {
 
 ManDressRouter.post("/findManProduct", async (req, res) => {
   try {
-    let { id } = req.body; // Use req.body to get the id from the body
+    let { id } = req.body; 
     const product = await ManProduct.findById(id);
     res.status(200).send({
       status: 200,

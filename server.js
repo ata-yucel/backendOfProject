@@ -28,7 +28,6 @@ app.use("/user", UserRouter)
 app.use("/man", ManDressRouter)
 app.use("/woman",WomanDressRouter)
 app.use("/order", OrderRouter)
-app.use('/', GeneralProductRouter);
 
 app.use(authMiddleware)
 

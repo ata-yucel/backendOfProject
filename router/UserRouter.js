@@ -4,6 +4,7 @@ const UserRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const tokenControl = require("../middleware/token");
 
+
 UserRouter.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -17,7 +18,7 @@ UserRouter.post("/login", async (req, res) => {
         if (user.password !== password) {
             return res.status(404).send({ status: false, message: 'Password is not matching!' });
         }
-        let token_given = jwt.sign({ username: user.username, email: user.email }, process.env.JWTKEY, { expiresIn: "1h" });
+        let token_given = jwt.sign({ username: user.username, email: user.email, balance: user.balance }, process.env.JWTKEY, { expiresIn: "1h" });
         res.status(200).send({
             status: true,
             message: `Login Successful, Welcome user ${username} !`,
@@ -25,9 +26,8 @@ UserRouter.post("/login", async (req, res) => {
             user: {
                 username: user.username,
                 email: user.email,
-                balance: user.balance 
-            },
-          
+                balance: user.balance
+            }
         });
     } catch (error) {
         res.status(404).send({ status: false, message: error.message });
