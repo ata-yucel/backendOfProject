@@ -8,7 +8,7 @@ const ManDressRouter = require("./router/ManDressRouter")
 const UserRouter = require("./router/UserRouter.js")
 const authMiddleware = require("./middleware/token")
 const OrderRouter = require("./router/OrderRouter.js")
-const GeneralProductRouter = require("./router/GeneralProductRouter.js")
+
 
 
 mongoose.connect("mongodb+srv://atayucel:nilgunata184@atacluster.wqqdyed.mongodb.net/project?retryWrites=true&w=majority")
